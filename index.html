@@ -18,7 +18,7 @@
         <canvas id="canvas" width="60" height="60"></canvas>
 
         <script type="text/javascript">
-                let el = document.getElementById('canvas')
+                let el = document.getElementById('canvas');
                 let img = document.createElement('img')
 
                 let WIDTH = 60
@@ -62,6 +62,7 @@
 
 
                     let box = document.createElement('div')
+                    box.setAttribute('style', `width:${WIDTH}px; height:${HEIGHT}px;`)
                     box.innerHTML= html
 
                     document.body.append(box)

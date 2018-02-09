@@ -1,10 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>404</title>
-</head>
-<body>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>demo</title>
 
-</body>
+        <style media="screen">
+
+            #canvas{
+                display: none;
+            }
+
+        </style>
+
+    </head>
+    <body>
+
+        <canvas id="canvas" width="60" height="60"></canvas>
+
+        <script type="text/javascript">
+                let el = document.getElementById('canvas');
+                let img = document.createElement('img')
+
+                let WIDTH = 60
+                let HEIGHT = 60
+
+                img.onload = function(){
+                    console.log('load ok')
+                    WIDTH = img.width
+                    HEIGHT = img.height
+
+                    el.width = img.width
+                    el.height = img.height
+
+                    let cxt = el.getContext('2d');
+
+                    cxt.drawImage(img, 0, 0, WIDTH, HEIGHT)
+                    let data = cxt.getImageData(0, 0, WIDTH, HEIGHT)
+
+                    let lines = []
+
+                    for(let y=0; y<WIDTH; y++){
+                        let line = []
+                        for(let x=0; x<WIDTH; x++){
+
+
+                            let start = (y*4*WIDTH)+4*x
+                            let end = start+4
+
+
+                            let span = `<span style="width:1px;height:1px;display:block;float:left; background-color:rgba(${data.data[start]}, ${data.data[start+1]}, ${data.data[start+2]}, ${(data.data[start+3]/255).toFixed(2)});"></span>`
+                            line.push(span)
+                            // console.log('%c0',`color: rgba(${data.data[start]}, ${data.data[start+1]}, ${data.data[start+2]}, ${(data.data[start+3]/255).toFixed(2)})`)
+
+                        }
+                        lines.push(line.join(''))
+                    }
+
+                    let html = lines.map(l => {
+                        return `<div style="height:1px;">${l}</div>`
+                    }).join('')
+
+
+                    let box = document.createElement('div')
+                    box.innerHTML= html
+
+                    document.body.append(box)
+
+
+                }
+
+                img.src = 'https://avatars2.githubusercontent.com/u/7124539';
+
+        </script>
+
+    </body>
 </html>
